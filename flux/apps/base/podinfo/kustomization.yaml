@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: podinfo
 resources:
   - namespace.yaml
-  - backend.yaml
-  - frontend.yaml
+  - release.yaml
