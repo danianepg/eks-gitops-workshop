@@ -13,7 +13,7 @@ spec:
       releaseName: frontend
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: default
+    namespace: podinfo
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -30,4 +30,4 @@ spec:
       releaseName: backend
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: default
+    namespace: podinfo
