@@ -3,6 +3,7 @@ kind: Application
 metadata:
   name: backend
 spec:
+  project: default
   destination:
     namespace: podinfo
     server: 'https://kubernetes.default.svc'
