@@ -1,26 +1,33 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: podinfo
-  namespace: podinfo
+  name: podinfo-frontend
+  namespace: argocd
 spec:
-  releaseName: podinfo
-  chart:
-    spec:
-      chart: podinfo
-      sourceRef:
-        kind: HelmRepository
-        name: podinfo
-        namespace: flux-system
-  interval: 5m
-  install:
-    remediation:
-      retries: 3
-  # Default values
-  # https://github.com/stefanprodan/podinfo/blob/master/charts/podinfo/values.yaml
-  values:
-    cache: redis-master.redis:6379
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
+  project: default
+  source:
+    chart: podinfo/podinfo
+    repoURL:  https://stefanprodan.github.io/podinfo
+    targetRevision: 6.1.3
+    helm:
+      releaseName: frontend
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: podinfo-frontend
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: podinfo/podinfo
+    repoURL:  https://stefanprodan.github.io/podinfo
+    targetRevision: 6.1.3
+    helm:
+      releaseName: backend
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
