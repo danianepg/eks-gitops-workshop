@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: podinfo-frontend
+  name: frontend
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     name: ''
-    namespace: podinfo
+    namespace: default
     server: 'https://kubernetes.default.svc'
   source:
     path: ''
@@ -18,7 +18,7 @@ spec:
     helm:
       parameters:
         - name: backend
-          value: 'http://podinfo-backend-podinfo:9898/echo'
+          value: 'http://backend-podinfo:9898/echo'
         - name: replicaCount
           value: '2'
   project: default
